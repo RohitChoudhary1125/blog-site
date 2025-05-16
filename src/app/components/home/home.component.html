@@ -1,61 +1,63 @@
 <div class="bg-image">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-transparent px-4 navbar-custom position-relative">
-    <a class="navbar-brand" href="#">Logo</a>
-    <div class="ms-auto">
-      <a [routerLink]="['/auth']" class="btn btn-sm bg-light">Sign Up</a>
-    </div>
-  </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent px-4 navbar-custom position-relative">
+        <a class="navbar-brand" href="#">Logo</a>
+        <div class="ms-auto">
+            <a [routerLink]="['/auth']" class="btn btn-sm bg-light">Sign Up</a>
+        </div>
+    </nav>
 
-  <!-- Optional center content here -->
-  <div class="d-flex align-items-center text-white h-75 position-relative z-2">
-    <div class="header-content">
-      <span class="badge badge-secondary">ADVENTURE</span>
-      <h2 class="font-weight-bold">Richird Norton photorealistic rendering as real photos</h2>
-      <h6> <span>1 Jan 2023 ---</span> Progressively incentivize cooperative systems through technically <br> sound
-        functionalities. The credibly productivate seamless data.</h6>
+    <!-- Optional center content here -->
+    <div class="d-flex align-items-center text-white h-75 position-relative z-2">
+        <div class="header-content">
+            <span class="badge badge-secondary">ADVENTURE</span>
+            <h2 class="font-weight-bold">Richird Norton photorealistic rendering as real photos</h2>
+            <h6> <span>1 Jan 2023 ---</span> Progressively incentivize cooperative systems through technically <br>
+                sound
+                functionalities. The credibly productivate seamless data.</h6>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="blog-section mt-3">
-  <div class="container">
-    <div class="d-flex justify-content-between">
-      <h3>Blogs ---</h3>
-      <div class="input-section d-flex">
-        <input type="text" class="form-control" placeholder="Search..." />
-        <button class="btn btn-sm btn-primary">Search</button>
-      </div>
-    </div>
-
-    <div class="row mt-3">
-      <ng-container *ngFor="let blog of blogs">
-        <div class="col-md-4 mb-4">
-          <div class="card">
-            <img [src]="blog.blog_image_url" [alt]="blog.title" class="header-image" />
-            <div class="content">
-              <p class="byline">{{ blog.author }} • {{ blog.createdAt | date }}</p>
-
-              <h1 class="title">
-                {{ blog.title }}
-                <mat-icon [ngStyle]="{ color: getAuthorColor(blog.author) }">arrow_outward</mat-icon>
-              </h1>
-
-              <p class="subtitle">{{ blog.content }}</p>
-
-              <span class="badge" [ngStyle]="{ color: getCategoryColor(blog.category_name) }">
-                {{ blog.category_name }}
-              </span>
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <h3>Blogs ---</h3>
+            <div class="input-section d-flex">
+                <input type="text" class="form-control" placeholder="Search..." #searchTerm />
+                <button class="btn btn-sm btn-primary ms-2" (click)="applySearch(searchTerm.value)">Search</button>
             </div>
-          </div>
+
         </div>
-      </ng-container>
+
+        <div class="row mt-3">
+            <ng-container *ngFor="let blog of blogs">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img [src]="blog.blog_image_url" [alt]="blog.title" class="header-image" />
+                        <div class="content">
+                            <p class="byline">{{ blog.author }} • {{ blog.createdAt | date }}</p>
+
+                            <h1 class="title">
+                                {{ blog.title }}
+                                <mat-icon [ngStyle]="{ color: getAuthorColor(blog.author) }">arrow_outward</mat-icon>
+                            </h1>
+
+                            <p class="subtitle">{{ blog.content }}</p>
+
+                            <span class="badge" [ngStyle]="{ color: getCategoryColor(blog.category_name) }">
+                                {{ blog.category_name }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+
+        <!-- Material Paginator -->
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            (page)="onPageChange($event)">
+        </mat-paginator>
+
     </div>
-
-
-    <!-- Material Paginator -->
-    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-      (page)="onPageChange($event)">
-    </mat-paginator>
-
-  </div>
 </div>

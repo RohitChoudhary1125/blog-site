@@ -11,7 +11,6 @@ import { CommonService } from '../../services/common.service';
 })
 export class HomeComponent {
   blogs: Item[] | any = [];
-  pagedBlogs: Item[] = [];
   pageSize = 6;
   pageIndex = 0;
   pageSizeOptions: number[] = [6, 12, 18, 24];
@@ -19,13 +18,21 @@ export class HomeComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  searchTerm: string = '';
+  filteredBlogs: Item[] = [];
+
+  applySearch(term: any): void {
+    this.searchTerm = term;
+    this.getBlogPosts();
+  }
+
   constructor(private commonService: CommonService) { }
 
   ngAfterViewInit(): void {
     this.getBlogPosts();
 
     setTimeout(() => {
-      if(this.blogs?.length == 0) {
+      if (this.blogs?.length == 0) {
         this.blogs = {
           "items": [
             {
@@ -139,7 +146,7 @@ export class HomeComponent {
   }
 
   getBlogPosts(): void {
-    let url = `blogs?page=${this.pageIndex + 1}&pageSize=${this.pageSize}`;
+    let url = `blogs?page=${this.pageIndex + 1}&pageSize=${this.pageSize}&search=${this.searchTerm}`;
     this.commonService.sendRequest(url, 'GET').subscribe({
       next: (response: any) => {
         this.blogs = response.items;
